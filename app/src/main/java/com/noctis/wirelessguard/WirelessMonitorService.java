@@ -118,14 +118,16 @@ public class WirelessMonitorService extends Service {
         iso8601.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         createNotificationChannel();
-        startForeground(NOTIF_ID, buildNotification("NOCTIS WirelessGuard: 監視中"));
 
         // IPCディレクトリ作成（アプリ専用外部領域、権限不要）
         File extDir = getExternalFilesDir("guardian");
         File baseDir = (extDir != null) ? extDir : new File(getFilesDir(), "guardian");
-        baseDir.mkdirs();
+        boolean dirOk = baseDir.exists() || baseDir.mkdirs();
         ipcLogPath = new File(baseDir, "wireless_events.jsonl").getAbsolutePath();
-        android.util.Log.i(TAG, "IPC log path: " + ipcLogPath);
+        android.util.Log.i(TAG, "extDir=" + extDir + " dirOk=" + dirOk + " ipcLogPath=" + ipcLogPath);
+
+        // 起動直後、確実に通知へパスとディレクトリ作成結果を出す（実機デバッグ用）
+        startForeground(NOTIF_ID, buildNotification("dirOk=" + dirOk + " : " + ipcLogPath));
 
         // P2Pマネージャ初期化
         p2pManager = (WifiP2pManager) getSystemService(WIFI_P2P_SERVICE);
