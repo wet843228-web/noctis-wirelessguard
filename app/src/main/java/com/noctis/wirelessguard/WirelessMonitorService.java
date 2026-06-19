@@ -119,12 +119,14 @@ public class WirelessMonitorService extends Service {
 
         createNotificationChannel();
 
-        // IPCディレクトリ作成（アプリ専用外部領域、権限不要）
-        File extDir = getExternalFilesDir("guardian");
-        File baseDir = (extDir != null) ? extDir : new File(getFilesDir(), "guardian");
-        boolean dirOk = baseDir.exists() || baseDir.mkdirs();
-        ipcLogPath = new File(baseDir, "wireless_events.jsonl").getAbsolutePath();
-        android.util.Log.i(TAG, "extDir=" + extDir + " dirOk=" + dirOk + " ipcLogPath=" + ipcLogPath);
+        // IPCディレクトリ作成
+        // Android/data/配下はAndroid 11+でTermuxを含む他アプリから完全に遮断されるため、
+        // Termuxからもアクセス可能な公開Downloadフォルダ配下に書き込む
+        File publicDir = new File(android.os.Environment.getExternalStoragePublicDirectory(
+            android.os.Environment.DIRECTORY_DOWNLOADS), "NoctisGuardian");
+        boolean dirOk = publicDir.exists() || publicDir.mkdirs();
+        ipcLogPath = new File(publicDir, "wireless_events.jsonl").getAbsolutePath();
+        android.util.Log.i(TAG, "publicDir=" + publicDir + " dirOk=" + dirOk + " ipcLogPath=" + ipcLogPath);
 
         // 起動直後、確実に通知へパスとディレクトリ作成結果を出す（実機デバッグ用）
         startForeground(NOTIF_ID, buildNotification("dirOk=" + dirOk + " : " + ipcLogPath));
