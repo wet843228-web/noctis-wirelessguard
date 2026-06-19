@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WirelessGuard</string>
+    <string name="notif_channel_name">Wireless Monitor</string>
+    <string name="notif_channel_desc">無線状態変化の監査通知</string>
+    <string name="service_running">WirelessGuard 監視中</string>
+    <string name="bt_state_on">Bluetooth: ON</string>
+    <string name="bt_state_off">Bluetooth: OFF</string>
+    <string name="bt_scan_mode_connectable">BT スキャンモード: 接続可</string>
+    <string name="bt_scan_mode_discoverable">⚠️ BT: 検出可能（Discoverable）</string>
+    <string name="bt_scan_mode_none">BT スキャンモード: 非表示</string>
+    <string name="wifi_on">Wi-Fi: ON</string>
+    <string name="wifi_off">Wi-Fi: OFF</string>
+    <string name="p2p_enabled">⚠️ Wi-Fi P2P: 有効</string>
+    <string name="p2p_disabled">Wi-Fi P2P: 無効</string>
+    <string name="p2p_peers_changed">⚠️ P2P ピア変化検知</string>
+    <string name="p2p_connected">⚠️ P2P 接続確立</string>
+    <string name="location_on">位置情報: ON</string>
+    <string name="location_off">位置情報: OFF</string>
+    <string name="export_blocked">データエクスポートはブロックされています</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.WirelessGuard" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#00FF88</item>
+        <item name="colorPrimaryVariant">#00CC66</item>
+        <item name="colorOnPrimary">#000000</item>
+        <item name="colorSecondary">#00AAFF</item>
+        <item name="colorBackground">#0A0A0F</item>
+        <item name="colorSurface">#12121A</item>
+        <item name="colorOnBackground">#00FF88</item>
+        <item name="colorOnSurface">#CCFFEE</item>
+        <item name="android:windowBackground">#0A0A0F</item>
+        <item name="android:statusBarColor">#0A0A0F</item>
+        <item name="android:navigationBarColor">#0A0A0F</item>
+    </style>
+</resources>

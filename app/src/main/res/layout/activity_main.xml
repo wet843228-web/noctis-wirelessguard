@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0A0F">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- ヘッダー -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NOCTIS WIRELESS GUARD"
+            android:textColor="#00FF88"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingTop="24dp"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_status_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MONITORING ACTIVE"
+            android:textColor="#00CC66"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:paddingBottom="20dp" />
+
+        <!-- BT ステータスカード -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[ BLUETOOTH ]"
+            android:textColor="#00AAFF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_bt_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="#CCFFEE"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="2dp" />
+
+        <TextView
+            android:id="@+id/tv_bt_scan_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="#CCFFEE"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="16dp" />
+
+        <!-- Wi-Fi ステータスカード -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[ WI-FI ]"
+            android:textColor="#00AAFF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_wifi_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="#CCFFEE"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="2dp" />
+
+        <TextView
+            android:id="@+id/tv_p2p_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="#CCFFEE"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="16dp" />
+
+        <!-- 位置情報 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[ LOCATION ]"
+            android:textColor="#00AAFF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_location_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="#CCFFEE"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="24dp" />
+
+        <!-- イベントログ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[ EVENT LOG ]"
+            android:textColor="#00AAFF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_event_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="#88BBAA"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:lineSpacingExtra="2dp"
+            android:paddingBottom="16dp" />
+
+        <!-- IPCログパス -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[ IPC LOG PATH ]"
+            android:textColor="#00AAFF"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:id="@+id/tv_log_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---"
+            android:textColor="#556655"
+            android:textSize="10sp"
+            android:fontFamily="monospace"
+            android:paddingBottom="24dp" />
+
+    </LinearLayout>
+</ScrollView>

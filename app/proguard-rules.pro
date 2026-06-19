@@ -1,0 +1,3 @@
+-keepattributes *Annotation*
+-keep class com.noctis.wirelessguard.** { *; }
+-dontwarn com.noctis.wirelessguard.**
