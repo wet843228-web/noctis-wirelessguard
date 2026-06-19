@@ -2,13 +2,13 @@ name: WirelessGuard APK Build
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,19 +22,9 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: gradle-
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # ── Debug APK（署名なし、即インストール可能）──
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
@@ -44,27 +34,3 @@ jobs:
           name: WirelessGuard-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 30
-
-      # ── Release APK（keystore が登録されている場合）──
-      - name: Build Release APK
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
-        env:
-          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
-        run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
-          ./gradlew assembleRelease \
-            -Pandroid.injected.signing.store.file=$(pwd)/keystore.jks \
-            -Pandroid.injected.signing.store.password=$STORE_PASSWORD \
-            -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
-            -Pandroid.injected.signing.key.password=$KEY_PASSWORD
-
-      - name: Upload Release APK
-        if: ${{ secrets.KEYSTORE_BASE64 != '' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: WirelessGuard-release
-          path: app/build/outputs/apk/release/app-release.apk
-          retention-days: 90
