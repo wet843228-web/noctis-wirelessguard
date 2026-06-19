@@ -37,9 +37,11 @@ public class WirelessMonitorService extends Service {
     public static final String ACTION_STATE_UPDATE = "com.noctis.wirelessguard.STATE_UPDATE";
 
     private static final String CHANNEL_ID    = "wireless_guard_channel";
-    private static final String IPC_DIR       = "/sdcard/guardian";
-    private static final String IPC_LOG_FILE  = IPC_DIR + "/wireless_events.jsonl";
+    private static final String TAG           = "WirelessGuard";
     private static final int    NOTIF_ID      = 2001;
+
+    // アプリ専用外部ストレージ領域（権限不要、Android 10+ Scoped Storage対応）
+    private String ipcLogPath;
 
     private final SimpleDateFormat iso8601 = new SimpleDateFormat(
         "yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
@@ -118,8 +120,12 @@ public class WirelessMonitorService extends Service {
         createNotificationChannel();
         startForeground(NOTIF_ID, buildNotification("NOCTIS WirelessGuard: 監視中"));
 
-        // IPCディレクトリ作成
-        new File(IPC_DIR).mkdirs();
+        // IPCディレクトリ作成（アプリ専用外部領域、権限不要）
+        File extDir = getExternalFilesDir("guardian");
+        File baseDir = (extDir != null) ? extDir : new File(getFilesDir(), "guardian");
+        baseDir.mkdirs();
+        ipcLogPath = new File(baseDir, "wireless_events.jsonl").getAbsolutePath();
+        android.util.Log.i(TAG, "IPC log path: " + ipcLogPath);
 
         // P2Pマネージャ初期化
         p2pManager = (WifiP2pManager) getSystemService(WIFI_P2P_SERVICE);
@@ -128,6 +134,10 @@ public class WirelessMonitorService extends Service {
         }
 
         registerSystemReceiver();
+
+        // 起動確認用イベント（疎通テスト）
+        logAndBroadcast("SERVICE_START", "WirelessGuard監視サービス起動",
+            "bt_state", "監視中...", null);
     }
 
     private void registerSystemReceiver() {
@@ -267,11 +277,11 @@ public class WirelessMonitorService extends Service {
             obj.put("message", message);
             obj.put("source", "WirelessGuard");
 
-            FileWriter fw = new FileWriter(IPC_LOG_FILE, true);
+            FileWriter fw = new FileWriter(ipcLogPath, true);
             fw.write(obj.toString() + "\n");
             fw.close();
         } catch (Exception e) {
-            // ログ書き込み失敗は無視（SDカードアクセス権がない場合など）
+            android.util.Log.e(TAG, "IPC log write failed: " + e.getMessage(), e);
         }
     }
 

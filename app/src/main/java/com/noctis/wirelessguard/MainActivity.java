@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     //    これはアプリ内のどのActivityにも適用される
     //    Quick Shareで画面を共有しようとしても黒画面になる
 
-    private static final String IPC_LOG_FILE = "/sdcard/guardian/wireless_events.jsonl";
     private static final int MAX_LOG_LINES = 30;
     private static final int UI_REFRESH_MS = 3000;
 
@@ -82,7 +81,11 @@ public class MainActivity extends AppCompatActivity {
         tvLogPath      = findViewById(R.id.tv_log_path);
         tvStatusLine   = findViewById(R.id.tv_status_line);
 
-        tvLogPath.setText("IPC → " + IPC_LOG_FILE);
+        File logDir = getExternalFilesDir("guardian");
+        String logPathText = (logDir != null)
+            ? new File(logDir, "wireless_events.jsonl").getAbsolutePath()
+            : "(内部ストレージ)/guardian/wireless_events.jsonl";
+        tvLogPath.setText("IPC → " + logPathText);
 
         // フォアグラウンドサービス起動
         Intent svcIntent = new Intent(this, WirelessMonitorService.class);
