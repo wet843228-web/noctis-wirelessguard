@@ -48,6 +48,17 @@
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
+        <!-- 新規アプリインストール検知 -->
+        <receiver
+            android:name=".PackageMonitorReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
         <!-- ブート後自動起動 -->
         <receiver
             android:name=".BootReceiver"

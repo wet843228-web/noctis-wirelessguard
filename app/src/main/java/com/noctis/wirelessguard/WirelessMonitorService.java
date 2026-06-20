@@ -35,6 +35,7 @@ import java.util.TimeZone;
 public class WirelessMonitorService extends Service {
 
     public static final String ACTION_STATE_UPDATE = "com.noctis.wirelessguard.STATE_UPDATE";
+    public static final String ACTION_LOG_EXTERNAL_EVENT = "com.noctis.wirelessguard.LOG_EXTERNAL_EVENT";
 
     private static final String CHANNEL_ID    = "wireless_guard_channel";
     private static final String TAG           = "WirelessGuard";
@@ -335,6 +336,13 @@ public class WirelessMonitorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && ACTION_LOG_EXTERNAL_EVENT.equals(intent.getAction())) {
+            String eventType = intent.getStringExtra("event_type");
+            String eventMsg = intent.getStringExtra("event_message");
+            if (eventType != null && eventMsg != null) {
+                logAndBroadcast(eventType, eventMsg, "bt_state", eventMsg, eventMsg);
+            }
+        }
         return START_STICKY;
     }
 
