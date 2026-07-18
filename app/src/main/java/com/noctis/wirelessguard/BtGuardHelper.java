@@ -4,7 +4,6 @@ import android.bluetooth.BluetoothA2dp;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothHeadset;
-import android.bluetooth.BluetoothHidHost;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.os.Environment;
@@ -71,7 +70,6 @@ public class BtGuardHelper {
 
         tryDisconnectProfile(context, adapter, device, BluetoothProfile.A2DP);
         tryDisconnectProfile(context, adapter, device, BluetoothProfile.HEADSET);
-        tryDisconnectProfile(context, adapter, device, BluetoothProfile.HID_HOST);
     }
 
     private static void tryDisconnectProfile(Context context, BluetoothAdapter adapter,
