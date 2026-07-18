@@ -80,6 +80,16 @@ public class WirelessMonitorService extends Service {
                         "BT探索: 開始", null);
                     break;
                 }
+                // 未登録デバイスの接続検知 → 強制切断
+                case BluetoothDevice.ACTION_ACL_CONNECTED: {
+                    BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                    if (device != null && !BtGuardHelper.isWhitelisted(device)) {
+                        String msg = "⚠️ 未登録BT機器接続検知: " + device.getAddress() + " -> 切断実行";
+                        logAndBroadcast("BT_UNKNOWN_DEVICE", msg, "bt_state", msg, msg);
+                        BtGuardHelper.disconnectIfUnknown(getApplicationContext(), device);
+                    }
+                    break;
+                }
                 // Wi-Fi 状態変化
                 case WifiManager.WIFI_STATE_CHANGED_ACTION: {
                     int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
