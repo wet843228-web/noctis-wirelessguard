@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.io.File;
@@ -61,6 +63,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Bluetooth実行時権限リクエスト（Android 12+ / API 31+）
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            java.util.List<String> needed = new java.util.ArrayList<>();
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_SCAN)
+                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                needed.add(android.Manifest.permission.BLUETOOTH_SCAN);
+            }
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT)
+                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                needed.add(android.Manifest.permission.BLUETOOTH_CONNECT);
+            }
+            if (!needed.isEmpty()) {
+                ActivityCompat.requestPermissions(this,
+                    needed.toArray(new String[0]), 1001);
+            }
+        }
 
         // ★★★ FLAG_SECURE 設定 ★★★
         // これによりこの画面は：
@@ -146,7 +165,10 @@ public class MainActivity extends AppCompatActivity {
     private void refreshCurrentState() {
         // BluetoothAdapter 現在状態
         BluetoothAdapter bt = BluetoothAdapter.getDefaultAdapter();
-        if (bt != null) {
+        boolean btPermOk = (Build.VERSION.SDK_INT < Build.VERSION_CODES.S)
+            || (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT)
+                == android.content.pm.PackageManager.PERMISSION_GRANTED);
+        if (bt != null && btPermOk) {
             updateBtState(bt.getState());
             updateBtScanMode(bt.getScanMode());
         }
