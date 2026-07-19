@@ -23,6 +23,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- ここまで追加 -->
 
+    <permission
+        android:name="com.noctis.wirelessguard.permission.FLASK_READY"
+        android:protectionLevel="signature" />
+
     <application
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -100,6 +104,15 @@
             android:exported="true">
             <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".FlaskReadyReceiver"
+            android:exported="true"
+            android:permission="com.noctis.wirelessguard.permission.FLASK_READY">
+            <intent-filter>
+                <action android:name="com.noctis.wirelessguard.FLASK_READY" />
             </intent-filter>
         </receiver>
 
