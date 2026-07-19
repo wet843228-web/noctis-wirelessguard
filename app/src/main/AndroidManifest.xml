@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- 読み取りのみ必要な権限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
@@ -19,6 +18,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
+    <!-- ここから追加: Boot動画→フローティングウィンドウ用 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- ここまで追加 -->
+
     <application
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,9 +32,6 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.WirelessGuard"
         tools:targetApi="31">
-
-        <!-- ★ FLAG_SECURE: スクリーンショット・画面共有・画面録画を完全ブロック -->
-        <!-- MainActivity で window.addFlags(FLAG_SECURE) を設定 -->
 
         <activity
             android:name=".MainActivity"
@@ -42,13 +43,11 @@
             </intent-filter>
         </activity>
 
-        <!-- フォアグラウンドサービス: 常駐監視 -->
         <service
             android:name=".WirelessMonitorService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
-        <!-- 新規アプリインストール検知 -->
         <receiver
             android:name=".PackageMonitorReceiver"
             android:exported="true">
@@ -59,7 +58,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- ブート後自動起動 -->
         <receiver
             android:name=".BootReceiver"
             android:exported="true">
@@ -69,7 +67,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- 無線状態変化の受信 -->
         <receiver
             android:name=".WirelessStateReceiver"
             android:exported="false">
@@ -84,6 +81,33 @@
                 <action android:name="android.location.PROVIDERS_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <!-- ここから追加: Boot動画→フローティングウィンドウ -->
+
+        <activity
+            android:name=".BootVideoActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".OverlayPermissionActivity"
+            android:exported="false" />
+
+        <receiver
+            android:name=".BootVideoReceiver"
+            android:exported="true">
+            <intent-filter android:priority="999">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".DefenderOverlayService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- ここまで追加 -->
 
     </application>
 </manifest>
