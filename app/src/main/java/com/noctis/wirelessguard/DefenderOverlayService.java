@@ -50,11 +50,19 @@ public class DefenderOverlayService extends Service {
         super.onCreate();
         startForeground(NOTIF_ID, buildNotification());
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        showFloatingWindow();
+        if (floatingView == null) {
+            showFloatingWindow();
+        }
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (floatingView != null) {
+            View wv = floatingView.findViewById(R.id.overlayWebView);
+            if (wv instanceof WebView) {
+                ((WebView) wv).loadUrl(NOCTIS_URL);
+            }
+        }
         return START_STICKY;
     }
 
