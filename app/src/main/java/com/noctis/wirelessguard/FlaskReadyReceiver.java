@@ -12,6 +12,7 @@ public class FlaskReadyReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        android.util.Log.e("NOCTIS_DEBUG", "onReceive called, action=" + intent.getAction());
         if (ACTION_FLASK_READY.equals(intent.getAction())) {
             Intent svc = new Intent(context, DefenderOverlayService.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
