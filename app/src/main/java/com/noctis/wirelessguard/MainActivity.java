@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
         // 初期状態取得
         refreshCurrentState();
 
+        findViewById(R.id.btn_open_noctis).setOnClickListener(v -> {
+            startActivity(new android.content.Intent(this, NoctisWebActivity.class));
+        });
+
         // 定期UIリフレッシュ（ログ再読み込み）
         uiHandler.postDelayed(this::periodicRefresh, UI_REFRESH_MS);
     }

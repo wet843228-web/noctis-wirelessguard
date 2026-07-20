@@ -155,5 +155,16 @@
             android:fontFamily="monospace"
             android:paddingBottom="24dp" />
 
+
+        <Button
+            android:id="@+id/btn_open_noctis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NOCTIS DEFENDERを開く"
+            android:textColor="#0A0A0F"
+            android:backgroundTint="#00FF88"
+            android:fontFamily="monospace"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp" />
     </LinearLayout>
 </ScrollView>

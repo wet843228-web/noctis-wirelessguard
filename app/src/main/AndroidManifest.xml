@@ -48,6 +48,10 @@
             </intent-filter>
         </activity>
 
+                <activity
+            android:name=".NoctisWebActivity"
+            android:exported="false" />
+
         <service
             android:name=".WirelessMonitorService"
             android:exported="false"
